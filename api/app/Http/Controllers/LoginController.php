@@ -26,10 +26,5 @@ class LoginController extends Controller
 
     // value_save
     $user->fill(array_merge($request->all(), ["password" => Hash::make($request->password)]))->save();
-
-    // token発行
-    $token = Auth::user()->createToken('authToken')->accessToken;
-
-    return response(["token" => $token]);
   }
 }
