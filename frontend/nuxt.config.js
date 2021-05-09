@@ -20,7 +20,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: '@/plugins/vee-validate' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -50,5 +50,8 @@ export default {
     baseURL: process.env.API_URL,
     browserBaseURL: process.env.API_BROWSER_URL,
     credentials: true,
+  },
+  build: {
+    transpile: ['vee-validate/dist/rules'],
   },
 };
