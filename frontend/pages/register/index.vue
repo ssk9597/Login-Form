@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api';
+import { defineComponent, ref, computed } from '@nuxtjs/composition-api';
 
 export default defineComponent({
   setup() {
@@ -48,12 +48,19 @@ export default defineComponent({
     const email = ref<string>('');
     const password = ref<string>('');
 
+    // computed
+    const name = computed(() => {
+      return `${lastName} ${firstName}`;
+    });
+
     return {
       // data
       lastName,
       firstName,
       email,
       password,
+      // computed
+      name,
     };
   },
 });
