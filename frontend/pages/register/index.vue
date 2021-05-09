@@ -1,39 +1,78 @@
 <template>
   <div class="register-container">
-    <form class="register-wrapper" @submit.prevent="registerUser()">
-      <h2 class="register-title">新規登録</h2>
-      <label class="register-label">
-        <span class="register-label-check">必須</span>
-        <span class="register-label-name">姓</span>
-      </label>
-      <input class="register-input" type="text" placeholder="例）田中" v-model="lastName" />
-      <label class="register-label">
-        <span class="register-label-check">必須</span>
-        <span class="register-label-name">名</span>
-      </label>
-      <input class="register-input" type="text" placeholder="例）太郎" v-model="firstName" />
-      <label class="register-label">
-        <span class="register-label-check">必須</span>
-        <span class="register-label-name">メールアドレス</span>
-      </label>
-      <input
-        class="register-input"
-        type="email"
-        placeholder="例）taro@example.com"
-        v-model="email"
-      />
-      <label class="register-label">
-        <span class="register-label-check">必須</span>
-        <span class="register-label-name">パスワード</span>
-      </label>
-      <input
-        class="register-input"
-        type="password"
-        placeholder="例）taroTanaka"
-        v-model="password"
-      />
-      <button class="register-button" type="submit">新規登録</button>
-    </form>
+    <ValidationObserver v-slot="{ invalid }">
+      <form class="register-wrapper" @submit.prevent="registerUser()">
+        <h2 class="register-title">新規登録</h2>
+        <!-- 姓 -->
+        <label class="register-label">
+          <span class="register-label-check">必須</span>
+          <span class="register-label-name">姓</span>
+        </label>
+        <ValidationProvider class="register-input" name="姓" rules="required" v-slot="{ errors }">
+          <input
+            class="register-input-area"
+            type="text"
+            placeholder="例）田中"
+            v-model="lastName"
+          />
+          <p class="register-input-error">{{ errors[0] }}</p>
+        </ValidationProvider>
+        <!-- 名 -->
+        <label class="register-label">
+          <span class="register-label-check">必須</span>
+          <span class="register-label-name">名</span>
+        </label>
+        <ValidationProvider class="register-input" name="名" rules="required" v-slot="{ errors }">
+          <input
+            class="register-input-area"
+            type="text"
+            placeholder="例）太郎"
+            v-model="firstName"
+          />
+          <p class="register-input-error">{{ errors[0] }}</p>
+        </ValidationProvider>
+        <!-- メールアドレス -->
+        <label class="register-label">
+          <span class="register-label-check">必須</span>
+          <span class="register-label-name">メールアドレス</span>
+        </label>
+        <ValidationProvider
+          class="register-input"
+          name="メールアドレス"
+          rules="required|email"
+          v-slot="{ errors }"
+        >
+          <input
+            class="register-input-area"
+            type="email"
+            placeholder="例）taro@example.com"
+            v-model="email"
+          />
+          <p class="register-input-error">{{ errors[0] }}</p>
+        </ValidationProvider>
+        <!-- パスワード -->
+        <label class="register-label">
+          <span class="register-label-check">必須</span>
+          <span class="register-label-name">パスワード</span>
+        </label>
+        <ValidationProvider
+          class="register-input"
+          name="パスワード"
+          rules="required|min:8|alpha_dash"
+          v-slot="{ errors }"
+        >
+          <input
+            class="register-input-area"
+            type="password"
+            placeholder="例）taroTanaka"
+            v-model="password"
+          />
+          <p class="register-input-error">{{ errors[0] }}</p>
+        </ValidationProvider>
+        <!-- 新規追加 -->
+        <button class="register-button" type="submit" :disabled="invalid">新規登録</button>
+      </form>
+    </ValidationObserver>
   </div>
 </template>
 
@@ -119,17 +158,28 @@ export default defineComponent({
   }
 
   &-input {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    color: #303030;
-    border: solid 1px #eee;
-    border-radius: 6px;
-    outline: 0;
-    transition: 0.3s;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    display: block;
+
+    &-area {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      color: #303030;
+      border: solid 1px #eee;
+      border-radius: 6px;
+      outline: 0;
+      transition: 0.3s;
+    }
+
+    &-error {
+      padding-top: 5px;
+      font-size: 12px;
+      color: #ee4056;
+      font-weight: 600;
+    }
   }
 
   &-button {
