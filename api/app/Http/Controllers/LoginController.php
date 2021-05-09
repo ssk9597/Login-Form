@@ -13,10 +13,13 @@ use Illuminate\Support\Facades\Hash;
 // Auth
 use Illuminate\Support\Facades\Auth;
 
+// Validation
+use App\Http\Requests\StoreRegister;
+
 
 class LoginController extends Controller
 {
-  public function register(Request $request)
+  public function register(StoreRegister $request)
   {
     // instance
     $user = new User;
