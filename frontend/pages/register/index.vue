@@ -1,6 +1,6 @@
 <template>
   <div class="register-container">
-    <form class="register-wrapper">
+    <form class="register-wrapper" @submit.prevent="registerUser()">
       <h2 class="register-title">新規登録</h2>
       <label class="register-label">
         <span class="register-label-check">必須</span>
@@ -32,7 +32,7 @@
         placeholder="例）taroTanaka"
         v-model="password"
       />
-      <button class="register-button">新規登録</button>
+      <button class="register-button" type="submit">新規登録</button>
     </form>
   </div>
 </template>
@@ -50,8 +50,17 @@ export default defineComponent({
 
     // computed
     const name = computed(() => {
-      return `${lastName} ${firstName}`;
+      return `${lastName.value} ${firstName.value}`;
     });
+
+    // methods
+    const registerUser = async () => {
+      try {
+        console.log(name.value, email.value, password.value);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
     return {
       // data
@@ -61,6 +70,8 @@ export default defineComponent({
       password,
       // computed
       name,
+      // methods
+      registerUser,
     };
   },
 });
