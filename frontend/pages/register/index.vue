@@ -3,6 +3,11 @@
     <ValidationObserver v-slot="{ invalid }">
       <form class="register-wrapper" @submit.prevent="registerUser()">
         <h2 class="register-title">新規登録</h2>
+        <div v-if="errors" class="register-alert-red">
+          <p v-if="errors.name">{{ errors.name[0] }}</p>
+          <p v-if="errors.email">{{ errors.email[0] }}</p>
+          <p v-if="errors.password">{{ errors.password[0] }}</p>
+        </div>
         <!-- 姓 -->
         <label class="register-label">
           <span class="register-label-check">必須</span>
@@ -77,15 +82,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api';
+import { defineComponent, ref, computed, useContext } from '@nuxtjs/composition-api';
 
 export default defineComponent({
-  setup() {
+  setup(props, context) {
+    // axios
+    const { $axios } = useContext();
+    // router
+    const router = context.root.$router;
     // data
     const lastName = ref<string>('');
     const firstName = ref<string>('');
     const email = ref<string>('');
     const password = ref<string>('');
+    const errors = ref<string>('');
 
     // computed
     const name = computed(() => {
@@ -95,9 +105,14 @@ export default defineComponent({
     // methods
     const registerUser = async () => {
       try {
-        console.log(name.value, email.value, password.value);
+        await $axios.post('/users/register', {
+          name: name.value,
+          email: email.value,
+          password: password.value,
+        });
       } catch (err) {
-        console.log(err);
+        errors.value = err.response.data.errors;
+        console.log(err.response.data.errors);
       }
     };
 
@@ -107,6 +122,7 @@ export default defineComponent({
       firstName,
       email,
       password,
+      errors,
       // computed
       name,
       // methods
@@ -140,6 +156,13 @@ export default defineComponent({
   &-title {
     text-align: center;
     padding-bottom: 20px;
+  }
+
+  &-alert-red {
+    padding: 5px 10px;
+    background: #ffebee;
+    margin-bottom: 10px;
+    font-size: 12px;
   }
 
   &-label {
