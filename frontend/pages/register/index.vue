@@ -6,29 +6,57 @@
         <span class="register-label-check">必須</span>
         <span class="register-label-name">姓</span>
       </label>
-      <input class="register-input" type="text" placeholder="例）田中" />
+      <input class="register-input" type="text" placeholder="例）田中" v-model="lastName" />
       <label class="register-label">
         <span class="register-label-check">必須</span>
         <span class="register-label-name">名</span>
       </label>
-      <input class="register-input" type="text" placeholder="例）太郎" />
+      <input class="register-input" type="text" placeholder="例）太郎" v-model="firstName" />
       <label class="register-label">
         <span class="register-label-check">必須</span>
         <span class="register-label-name">メールアドレス</span>
       </label>
-      <input class="register-input" type="email" placeholder="例）taro@example.com" />
+      <input
+        class="register-input"
+        type="email"
+        placeholder="例）taro@example.com"
+        v-model="email"
+      />
       <label class="register-label">
         <span class="register-label-check">必須</span>
         <span class="register-label-name">パスワード</span>
       </label>
-      <input class="register-input" type="password" placeholder="例）taroTanaka" />
+      <input
+        class="register-input"
+        type="password"
+        placeholder="例）taroTanaka"
+        v-model="password"
+      />
       <button class="register-button">新規登録</button>
     </form>
   </div>
 </template>
 
-<script>
-export default {};
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api';
+
+export default defineComponent({
+  setup() {
+    // data
+    const lastName = ref<string>('');
+    const firstName = ref<string>('');
+    const email = ref<string>('');
+    const password = ref<string>('');
+
+    return {
+      // data
+      lastName,
+      firstName,
+      email,
+      password,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
