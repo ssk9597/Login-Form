@@ -4,9 +4,7 @@
       <form class="login-wrapper" @submit.prevent="loginUser()">
         <h2 class="login-title">ログイン</h2>
         <div v-if="errors" class="login-alert-red">
-          <p v-if="errors.name">{{ errors.name[0] }}</p>
-          <p v-if="errors.email">{{ errors.email[0] }}</p>
-          <p v-if="errors.password">{{ errors.password[0] }}</p>
+          <p>{{ errors }}</p>
         </div>
         <!-- メールアドレス -->
         <label class="login-label">
@@ -68,13 +66,13 @@ export default defineComponent({
     // methods
     const loginUser = async () => {
       try {
-        await $axios.post('/users/login', {
+        const res = await $axios.post('/users/login', {
           email: email.value,
           password: password.value,
         });
+        errors.value = res.data.message;
       } catch (err) {
         errors.value = err.response.data.errors;
-        console.log(err.response.data.errors);
       }
     };
 
