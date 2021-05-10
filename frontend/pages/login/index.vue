@@ -72,6 +72,10 @@ export default defineComponent({
         });
         // error_message
         errors.value = res.data.message;
+        // errorがない時TOPページへ移動する
+        if (!errors.value) {
+          router.push('/');
+        }
         // token
         await $axios.setToken(res.data.token, 'Bearer');
       } catch (err) {
