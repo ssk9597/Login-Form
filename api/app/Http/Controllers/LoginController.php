@@ -37,5 +37,10 @@ class LoginController extends Controller
       "email" => "required|email",
       "password" => "required|string|min:8"
     ]);
+
+    // validationエラー
+    if (!Auth::attempt($login)) {
+      return response(["message" => "メールアドレスもしくはパスワードが間違っています"]);
+    };
   }
 }
