@@ -105,14 +105,25 @@ export default defineComponent({
     // methods
     const registerUser = async () => {
       try {
+        // 新規登録
         await $axios.post('/users/register', {
           name: name.value,
           email: email.value,
           password: password.value,
         });
+
+        // ログイン
+        const res = await $axios.post('/users/login', {
+          email: email.value,
+          password: password.value,
+        });
+
+        // token
+        await $axios.setToken(res.data.token, 'Bearer');
+
+        router.push('/');
       } catch (err) {
         errors.value = err.response.data.errors;
-        console.log(err.response.data.errors);
       }
     };
 
