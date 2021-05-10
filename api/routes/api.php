@@ -16,4 +16,6 @@ Route::middleware(['cors'])->group(function () {
   Route::options('accounts', function () {
     return response()->json();
   });
+
+  Route::post("/users/register", "LoginController@register");
 });
