@@ -70,7 +70,10 @@ export default defineComponent({
           email: email.value,
           password: password.value,
         });
+        // error_message
         errors.value = res.data.message;
+        // token
+        await $axios.setToken(res.data.token, 'Bearer');
       } catch (err) {
         errors.value = err.response.data.errors;
       }
