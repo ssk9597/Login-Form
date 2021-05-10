@@ -42,5 +42,8 @@ class LoginController extends Controller
     if (!Auth::attempt($login)) {
       return response(["message" => "メールアドレスもしくはパスワードが間違っています"]);
     };
+
+    // token発行
+    $token = Auth::user()->createToken('authToken')->accessToken;
   }
 }
