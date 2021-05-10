@@ -45,5 +45,8 @@ class LoginController extends Controller
 
     // token発行
     $token = Auth::user()->createToken('authToken')->accessToken;
+
+    // tokenとユーザー情報を受け取る
+    return response(["user" => Auth::user(), "token" => $token]);
   }
 }
