@@ -32,5 +32,10 @@ class LoginController extends Controller
   // ログイン
   public function login(Request $request)
   {
+    // validation
+    $login = $request->validate([
+      "email" => "required|email",
+      "password" => "required|string|min:8"
+    ]);
   }
 }
