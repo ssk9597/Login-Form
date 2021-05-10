@@ -18,4 +18,5 @@ Route::middleware(['cors'])->group(function () {
   });
 
   Route::post("/users/register", "LoginController@register");
+  Route::post("/users/login", "LoginController@login");
 });
