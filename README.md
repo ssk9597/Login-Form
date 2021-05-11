@@ -21,12 +21,10 @@ node:14.15.3-alpine
 ## Usage
 
 ```
-$ git clone git@github.com:ssk9597/Docker-Laravel-Nuxt-Nginx-MySQL.git
-$ cd Docker-Laravel-Nuxt-Nginx-MySQL
+$ git clone git@github.com:ssk9597/Login-Form.git
+$ cd Login-Form
 $ make nuxt
 $ make backend
-$ make typescript
-$ make composition-api
 ```
 
 ### nuxt
